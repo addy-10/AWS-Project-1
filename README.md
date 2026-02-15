@@ -60,7 +60,7 @@ s3://data-lake-bucket/
 
 ---
 
-## ⚙️ Key Features
+## Key Features
 
 - Medallion Architecture (Bronze → Silver)
 - Event-driven processing using S3 triggers
