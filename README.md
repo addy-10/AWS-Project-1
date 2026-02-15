@@ -18,11 +18,11 @@ The architecture is fully event-driven and cost-optimized.
 1. Data is extracted from **Amazon RDS**
 2. A **scheduled AWS Glue job** loads data into:
    - `S3 Bronze Layer (Landing Directory)`
-   - Script for first pipeline - [Glue-Pipeline-1](AWS-Project-1/glue_script_pipeline_1.py)
+   - Script for first pipeline - [Glue-Pipeline-1](AWS-Project-1/glue_script-pipeline_1.py)
 3. An **S3 event trigger** invokes a **Lambda function**
    - Lambda function code - [Lambda function](AWS-Project-1/lambdafunc.py)
 5. Lambda calls a **Glue Data Quality Job**
-   - Script for second pipeline - [Glue-Pipeline-2](AWS-Project-1/glue_script_pipeline_2.py)
+   - Script for second pipeline - [Glue-Pipeline-2](AWS-Project-1/glue_script-pipeline_2.py)
 7. Based on validation:
    - Invalid data → `Discarded Folder`
    - Valid data → `Silver Layer (Staging)`
