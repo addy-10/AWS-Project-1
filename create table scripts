@@ -1,0 +1,78 @@
+
+CREATE TABLE orders (
+    order_id INT,              
+    order_last_updated DATETIME,          
+    customer_id INT,               
+    order_status VARCHAR(25)
+);
+
+INSERT INTO orders (order_id, order_last_updated, customer_id, order_status) VALUES
+(1, '2024-07-31 08:15:23', 11599, 'CLOSED'),
+(2, '2024-07-31 09:30:45', 256, 'PENDING_PAYMENT'),
+(3, '2024-07-31 10:45:00', 12111, 'COMPLETE'),
+(4, '2024-07-31 11:05:12', 8827, 'CLOSED'),
+(5, '2024-07-31 12:22:33', 11318, 'COMPLETE'),
+(6, '2024-07-31 13:14:50', 7130, 'COMPLETE'),
+(7, '2024-07-31 14:37:29', 4530, 'COMPLETE'),
+(8, '2024-07-31 15:48:05', 2911, 'PROCESSING'),
+(9, '2024-07-31 16:22:40', 5657, 'PENDING_PAYMENT'),
+(10, '2024-07-31 17:50:18', 5648, 'PENDING_PAYMENT');
+
+
+INSERT INTO orders VALUES
+(11, '2024-08-01 08:15:23', 918, 'PAYMENT_REVIEW');
+
+=======================================================================================================================================
+
+CREATE TABLE fetch_details(
+    metadata_id INT AUTO_INCREMENT PRIMARY KEY,  
+    tablename VARCHAR(255) NOT NULL,            
+    last_fetched DATETIME NOT NULL,             
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+
+insert into fetch_details (tablename, last_fetched) values('orders','1900-01-01 00:00:00');
+
+==========================================================================================================================================
+
+valid_orders = ['ON_HOLD','PAYMENT_REVIEW','PROCESSING','CLOSED','SUSPECTED_FRAUD','COMPLETE','PENDING','CANCELED','PENDING_PAYMENT']
+
+===========================================================================================================================================
+
+
+create table valid_order_status_lk (status_name varchar(25));
+
+insert into valid_order_status_lk values
+('ON_HOLD'),('PAYMENT_REVIEW'),('PROCESSING'),
+('CLOSED'),('SUSPECTED_FRAUD'),('COMPLETE'),
+('PENDING'),('CANCELED'),('PENDING_PAYMENT');
+
+
+============================================================================================================================================
+
+
+INSERT INTO orders (order_id, order_last_updated, customer_id, order_status) VALUES
+(11, '2024-08-03 08:15:30', 918, 'PAYMENT_REVIEW'),
+(12, '2024-08-03 10:45:12', 1837, 'CLOSED'),
+(13, '2024-08-03 14:20:55', 9149, 'PENDING_PAYMENT'),
+(14, '2024-08-03 16:05:10', 9842, 'PROCESSING'),
+(15, '2024-08-03 09:50:25', 2568, 'COMPLETE'),
+(16, '2024-08-03 11:30:40', 7276, 'PENDING_PAYMENT'),
+(17, '2024-08-03 13:15:05', 2667, 'COMPLETE'),
+(18, '2024-08-03 15:45:30', 1205, 'CLOSED'),
+(19, '2024-08-03 17:10:15', 9488, 'PENDING_PAYMENT'),
+(20, '2024-08-03 18:25:50', 9198, 'PROCESSING');
+
+
+
+
+
+
+
+
+
+
+
+
+
