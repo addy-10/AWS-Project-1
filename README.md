@@ -2,9 +2,9 @@
 
 ## Overview
 
-This project implements a **data lake pipeline on AWS** using a Medallion Architecture (Bronze → Silver).  
+This project implements an **automated data lake pipeline on AWS** using a Medallion Architecture (Bronze → Silver).  
 
-Data is ingested from **Amazon RDS** into **Amazon S3**, validated using **AWS Glue and Lambda**, and queried using **Amazon Athena** for analytics.
+Data for orders is ingested from **Amazon RDS** into **Amazon S3**, validated using **AWS Glue and Lambda**, and queried using **Amazon Athena** for analytics.
 
 The architecture is fully event-driven and cost-optimized.
 
@@ -18,11 +18,11 @@ The architecture is fully event-driven and cost-optimized.
 1. Data is extracted from **Amazon RDS**
 2. A **scheduled AWS Glue job** loads data into:
    - `S3 Bronze Layer (Landing Directory)`
-   - Script for first pipeline - [Glue-Pipeline-1](AWS-Project-1/glue_script-pipeline_1.py)
+   - Script for first pipeline - [Glue-Pipeline-1](AWS-Project-1/glue_script_pipeline_1.py)
 3. An **S3 event trigger** invokes a **Lambda function**
    - Lambda function code - [Lambda function](AWS-Project-1/lambdafunc.py)
 5. Lambda calls a **Glue Data Quality Job**
-   - Script for second pipeline - [Glue-Pipeline-2](AWS-Project-1/glue_script-pipeline_2.py)
+   - Script for second pipeline - [Glue-Pipeline-2](AWS-Project-1/glue_script_pipeline_2.py)
 7. Based on validation:
    - Invalid data → `Discarded Folder`
    - Valid data → `Silver Layer (Staging)`
@@ -75,16 +75,18 @@ s3://data-lake-bucket/
 ## How It Works
 
 ### Scheduled Ingestion
-Glue job runs on predefined schedule and loads data from RDS to S3 Bronze layer.
+Glue job runs on predefined schedule and loads incremental data from RDS using a metadata table to S3 Bronze layer.
+Same job is used to update latest processed timestamp for orders table in metadata table. This help us to ensure atleast once processing.
 
 ### Event-Based Validation
 New files in Bronze trigger Lambda, which invokes a Glue job to:
-- Apply data validation rules
-- Segregate bad records
-- Promote clean data
+- Apply data validation rules - based on valid order status
+- Segregate bad records - into doscarded folder
+- Promote clean data - into staging folder(silver layer) 
 
 ### Analytics
 Athena queries only the Silver layer for reporting and BI dashboards.
+We use glue crawlers to crawl on silver layer data and perform analytics.
 
 ---
 
